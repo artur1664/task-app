@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+
+  task-app:
+    container_name: task-app
+    build:
+      context: .
+    ports:
+      - 8080:8080
+    networks:
+      - task-app
+
+networks:
+  task-app:
+    driver: bridge
