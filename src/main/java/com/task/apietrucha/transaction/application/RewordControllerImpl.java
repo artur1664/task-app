@@ -1,6 +1,6 @@
 package com.task.apietrucha.transaction.application;
 
-import static com.task.apietrucha.shared.RestConstants.APP_BASE_URL_V1;
+import static com.task.apietrucha.shared.rest.RestConstants.APP_BASE_URL_V1;
 
 import com.task.apietrucha.transaction.application.contract.RewordController;
 import com.task.apietrucha.transaction.domain.rest.RewordResponse;

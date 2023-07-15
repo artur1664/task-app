@@ -2,21 +2,30 @@ package com.task.apietrucha.transaction.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.task.apietrucha.shared.DateTimeUtils;
 import com.task.apietrucha.transaction.domain.adapter.PointsService;
+import com.task.apietrucha.transaction.infrastructure.PointsRepository;
 import java.math.BigDecimal;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.Mock;
 
 class PointsServiceImplTest {
 
     private PointsService service;
 
+    @Mock
+    private PointsRepository pointsRepository;
+
+    @Mock
+    private DateTimeUtils dateTimeUtils;
+
     @BeforeEach
     void setUp() {
-        service = new PointsServiceImpl();
+        service = new PointsServiceImpl(pointsRepository, dateTimeUtils);
     }
 
     private static Stream<Arguments> calculate_test_case() {

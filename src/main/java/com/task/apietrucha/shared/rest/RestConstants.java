@@ -1,4 +1,4 @@
-package com.task.apietrucha.shared;
+package com.task.apietrucha.shared.rest;
 
 public interface RestConstants {
 

@@ -24,15 +24,15 @@ class PurchaseServiceImplIT extends DbTestBase {
 
     @BeforeEach
     void setUp() {
-        service = new PurchaseServiceImpl(purchaseRepository, pointsRepository, pointsService);
+        service = new PurchaseServiceImpl(purchaseRepository, pointsRepository, pointsService, dateTimeUtils);
     }
 
     @Test
     void update_should_update_purchase_and_create_points_if_not_present() {
         //given
-        Purchase purchase = purchaseRepository.save(PurchaseTestDataFactory.prepare(BigDecimal.valueOf(200), 1L));
+        Purchase purchase = purchaseRepository.save(PurchaseTestDataFactory.prepare(BigDecimal.valueOf(200), 1L).build());
         //when
-        var result = service.update(PurchaseTestDataFactory.prepareUpdateRequest(BigDecimal.valueOf(150)), purchase.getId());
+        var result = service.update(PurchaseTestDataFactory.prepareUpdateRequest(BigDecimal.valueOf(150)).build(), purchase.getId());
         //then
         assertEquals(0, purchase.getAmount().compareTo(result.value()));
         //and points created

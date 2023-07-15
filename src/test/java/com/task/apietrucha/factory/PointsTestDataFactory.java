@@ -7,6 +7,8 @@ public class PointsTestDataFactory {
 
     public static Points.PointsBuilder prepare(Purchase purchase, Long customerId) {
         return Points.builder()
+            .createdYear(2023)
+            .createdMonth(5)
             .purchase(purchase)
             .customerId(customerId);
     }

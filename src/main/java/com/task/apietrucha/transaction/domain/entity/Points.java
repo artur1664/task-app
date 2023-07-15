@@ -1,5 +1,6 @@
 package com.task.apietrucha.transaction.domain.entity;
 
+import com.task.apietrucha.shared.DateTimeUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import java.time.OffsetDateTime;
+import java.util.Calendar;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,14 +48,22 @@ public class Points {
     @CreationTimestamp
     private OffsetDateTime createdTs;
 
+    @Column(nullable = false)
+    private Integer createdYear;
+
+    @Column(nullable = false)
+    private Integer createdMonth;
+
     @Version
     private Integer version;
 
-    public static Points from(Integer value, Purchase purchase, Long customerId) {
+    public static Points from(Integer value, Purchase purchase, Long customerId, int month, int year) {
         return Points.builder()
             .points(value)
             .purchase(purchase)
             .customerId(customerId)
+            .createdMonth(month)
+            .createdYear(year)
             .build();
     }
 }

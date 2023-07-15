@@ -7,23 +7,20 @@ import java.math.BigDecimal;
 
 public class PurchaseTestDataFactory {
 
-    public static Purchase prepare(BigDecimal amount, Long customerId) {
+    public static Purchase.PurchaseBuilder prepare(BigDecimal amount, Long customerId) {
         return Purchase.builder()
             .customerId(customerId)
-            .amount(amount)
-            .build();
+            .amount(amount);
     }
 
-    public static CreatePurchaseRequest prepareCreateRequest(BigDecimal amount, Long customerId) {
+    public static CreatePurchaseRequest.CreatePurchaseRequestBuilder prepareCreateRequest(BigDecimal amount, Long customerId) {
         return CreatePurchaseRequest.builder()
             .amount(amount)
-            .customerId(customerId)
-            .build();
+            .customerId(customerId);
     }
 
-    public static UpdatePurchaseRequest prepareUpdateRequest(BigDecimal newValue) {
+    public static UpdatePurchaseRequest.UpdatePurchaseRequestBuilder prepareUpdateRequest(BigDecimal newValue) {
         return UpdatePurchaseRequest.builder()
-            .newValue(newValue)
-            .build();
+            .newValue(newValue);
     }
 }

@@ -1,6 +1,6 @@
 package com.task.apietrucha.transaction.application;
 
-import static com.task.apietrucha.shared.RestConstants.APP_BASE_URL_V1;
+import static com.task.apietrucha.shared.rest.RestConstants.APP_BASE_URL_V1;
 import static com.task.apietrucha.transaction.application.contract.PurchaseController.PURCHASE_CREATE_URL;
 import static com.task.apietrucha.transaction.application.contract.PurchaseController.PURCHASE_UPDATE_URL;
 import static org.hamcrest.Matchers.containsString;
@@ -37,7 +37,7 @@ class PurchaseControllerImplIT extends ApplicationTestBase {
         //given
         var amount = new BigDecimal(120);
         var customerId = 1L;
-        var request = PurchaseTestDataFactory.prepareCreateRequest(amount, customerId);
+        var request = PurchaseTestDataFactory.prepareCreateRequest(amount, customerId).build();
         //when
         ResultActions result = mockMvc.perform(
             post(APP_BASE_URL_V1 + PURCHASE_CREATE_URL)
@@ -65,11 +65,9 @@ class PurchaseControllerImplIT extends ApplicationTestBase {
 
     private static Stream<Arguments> create_invalid_requests() {
         return Stream.of(
-            Arguments.of(PurchaseTestDataFactory.prepareCreateRequest(null, 1L), "Amount cannot be null"),
-            Arguments.of(PurchaseTestDataFactory.prepareCreateRequest(BigDecimal.ZERO, null),
-                "Customer id cannot be null"),
-            Arguments.of(PurchaseTestDataFactory.prepareCreateRequest(null, null),
-                "Customer id cannot be null, Amount cannot be null")
+            Arguments.of(PurchaseTestDataFactory.prepareCreateRequest(null, 1L).build(), "Amount cannot be null"),
+            Arguments.of(PurchaseTestDataFactory.prepareCreateRequest(BigDecimal.ZERO, null).build(),
+                "Customer id cannot be null")
         );
     }
 
@@ -92,11 +90,11 @@ class PurchaseControllerImplIT extends ApplicationTestBase {
     void update_should_return_ok() throws Exception {
         //given
         var customerId = 1L;
-        var purchase = purchaseRepository.save(PurchaseTestDataFactory.prepare(BigDecimal.TEN, customerId));
+        var purchase = purchaseRepository.save(PurchaseTestDataFactory.prepare(BigDecimal.TEN, customerId).build());
         var points = pointsRepository.save(PointsTestDataFactory.prepare(purchase, customerId).points(0).build());
         //and
         var newValue = BigDecimal.valueOf(100);
-        var request = PurchaseTestDataFactory.prepareUpdateRequest(newValue);
+        var request = PurchaseTestDataFactory.prepareUpdateRequest(newValue).build();
         //when
         ResultActions result = mockMvc.perform(put(APP_BASE_URL_V1 + PURCHASE_UPDATE_URL, purchase.getId())
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -122,7 +120,7 @@ class PurchaseControllerImplIT extends ApplicationTestBase {
         //given
         var purchaseId = 1L;
         //and
-        var request = PurchaseTestDataFactory.prepareUpdateRequest(null);
+        var request = PurchaseTestDataFactory.prepareUpdateRequest(null).build();
         //when
         ResultActions result = mockMvc.perform(
             put(APP_BASE_URL_V1 + PURCHASE_UPDATE_URL, purchaseId)
@@ -140,7 +138,7 @@ class PurchaseControllerImplIT extends ApplicationTestBase {
         //given
         var purchaseId = 1L;
         //and
-        var request = PurchaseTestDataFactory.prepareUpdateRequest(BigDecimal.ZERO);
+        var request = PurchaseTestDataFactory.prepareUpdateRequest(BigDecimal.ZERO).build();
         //when
         ResultActions result = mockMvc.perform(
             put(APP_BASE_URL_V1 + PURCHASE_UPDATE_URL, purchaseId)

@@ -1,5 +1,6 @@
 package com.task.apietrucha.transaction.domain;
 
+import com.task.apietrucha.shared.DateTimeUtils;
 import com.task.apietrucha.transaction.application.PurchaseNotFound;
 import com.task.apietrucha.transaction.domain.adapter.PointsService;
 import com.task.apietrucha.transaction.domain.adapter.PurchaseService;
@@ -24,6 +25,7 @@ class PurchaseServiceImpl implements PurchaseService {
     private final PurchaseRepository purchaseRepository;
     private final PointsRepository pointsRepository;
     private final PointsService pointsService;
+    private final DateTimeUtils dateTimeUtils;
 
     @Transactional
     @Override
@@ -31,7 +33,13 @@ class PurchaseServiceImpl implements PurchaseService {
         log.info("Creating new purchase");
         Purchase savedPurchase = purchaseRepository.save(Purchase.from(request));
         int pointsForPurchase = pointsService.calculate(request.amount());
-        Points points = pointsRepository.save(Points.from(pointsForPurchase, savedPurchase, request.customerId()));
+        Points points = pointsRepository.save(Points.from(pointsForPurchase,
+                savedPurchase,
+                request.customerId(),
+                dateTimeUtils.getActualMonthNumber(),
+                dateTimeUtils.getActualYearNumber()
+            )
+        );
         log.info("Purchase saved {}, points: {}", savedPurchase, points);
         return CreatePurchaseResponse.from(savedPurchase.getId());
     }
@@ -60,7 +68,13 @@ class PurchaseServiceImpl implements PurchaseService {
                 return points;
             })
             .orElseGet(
-                () -> pointsRepository.save(Points.from(recalculatedPoints, purchase, purchase.getCustomerId()))
+                () -> pointsRepository.save(Points.from(
+                    recalculatedPoints,
+                    purchase,
+                    purchase.getCustomerId(),
+                    dateTimeUtils.getActualMonthNumber(),
+                    dateTimeUtils.getActualYearNumber()
+                ))
             );
     }
 }

@@ -1,5 +1,6 @@
-package com.task.apietrucha.shared;
+package com.task.apietrucha.shared.rest;
 
+import com.task.apietrucha.shared.ErrorResponse;
 import java.time.OffsetDateTime;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
