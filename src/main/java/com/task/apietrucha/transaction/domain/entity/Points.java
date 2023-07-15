@@ -1,4 +1,4 @@
-package com.task.apietrucha.transaction.domain;
+package com.task.apietrucha.transaction.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,10 +16,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "points")
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -46,4 +48,12 @@ public class Points {
 
     @Version
     private Integer version;
+
+    public static Points from(Integer value, Purchase purchase, Long customerId) {
+        return Points.builder()
+            .points(value)
+            .purchase(purchase)
+            .customerId(customerId)
+            .build();
+    }
 }

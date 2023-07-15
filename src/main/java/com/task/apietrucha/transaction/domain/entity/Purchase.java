@@ -1,5 +1,6 @@
-package com.task.apietrucha.transaction.domain;
+package com.task.apietrucha.transaction.domain.entity;
 
+import com.task.apietrucha.transaction.domain.rest.CreatePurchaseRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,9 +15,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "purchase")
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -35,4 +38,11 @@ public class Purchase {
 
     @Version
     private Integer version;
+
+    public static Purchase from(CreatePurchaseRequest request) {
+        return Purchase.builder()
+            .amount(request.amount())
+            .customerId(request.customerId())
+            .build();
+    }
 }
