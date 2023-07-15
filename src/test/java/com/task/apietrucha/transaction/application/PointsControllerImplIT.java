@@ -67,8 +67,7 @@ class PointsControllerImplIT extends ApplicationTestBase {
         var purchase8 = purchaseRepository.save(PurchaseTestDataFactory.prepare(BigDecimal.TEN, customerId).build());
 
         //and should not be in results per month
-        pointsRepository.save(
-            PointsTestDataFactory.prepare(purchase0, customerId).createdYear(2022).createdMonth(1).points(1).build());
+        pointsRepository.save(PointsTestDataFactory.prepare(purchase0, customerId).createdYear(2022).createdMonth(1).points(1).build());
         pointsRepository.save(PointsTestDataFactory.prepare(purchase1, customerId).createdYear(2023).createdMonth(2).points(1).build());
         pointsRepository.save(PointsTestDataFactory.prepare(purchase2, customerId).createdYear(2023).createdMonth(3).points(1).build());
         //and should be in results

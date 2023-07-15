@@ -24,7 +24,7 @@ public interface PointsController {
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "User points per month",
+            description = "Customer points per month",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = PointsResponse.class))),
         @ApiResponse(

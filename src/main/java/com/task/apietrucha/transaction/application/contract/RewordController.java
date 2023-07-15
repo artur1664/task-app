@@ -2,6 +2,7 @@ package com.task.apietrucha.transaction.application.contract;
 
 import com.task.apietrucha.shared.ErrorResponse;
 import com.task.apietrucha.transaction.domain.rest.RewordResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Tag(name = "Transaction")
 public interface RewordController {
 
-    String REWORD_URL = "/reword";
+    String REWORD_URL = "/reword/{customerId}";
 
     @GetMapping(REWORD_URL)
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get reword information for customer")
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
@@ -26,15 +28,10 @@ public interface RewordController {
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = RewordResponse.class))),
         @ApiResponse(
-            responseCode = "400",
-            description = "Bad request",
-            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
-                schema = @Schema(implementation = ErrorResponse.class))),
-        @ApiResponse(
             responseCode = "500",
             description = "Internal server error",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = ErrorResponse.class))),
     })
-    RewordResponse getReword(Integer points);
+    RewordResponse getRewordInfo(Long customerId);
 }

@@ -6,8 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Instead of using in LocalDateTime.now() etc. use clock bean This can be overriden in tests so all tests will be
- * independent of actual time
+ * Instead of using in LocalDateTime.now() etc. use clock bean this will allow to set fixed time for tests
  */
 
 @Configuration

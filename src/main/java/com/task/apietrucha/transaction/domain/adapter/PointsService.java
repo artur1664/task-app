@@ -8,4 +8,6 @@ public interface PointsService {
     Integer calculate(BigDecimal input);
 
     PointsResponse getPointsFromLastThreeMonths(Long customerId);
+
+    Long getTotalPointsForCustomer(Long customerId);
 }
