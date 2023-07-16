@@ -16,11 +16,10 @@ public interface PointsRepository extends JpaRepository<Points, Long> {
 
     @Query("select sum(p.points) as sumPerMonth, p.createdMonth as monthNumber, p.createdYear as yearNumber"
         + " from Points p"
-        + " where p.customerId=:customerId and p.createdYear=:year and p.createdMonth > :month"
-        + " group by p.createdMonth"
-        + " order by p.createdMonth "
-        + " desc limit 3")
-    List<PointsProjection> findPointsFromLastThreeMonthsForCustomerId(Long customerId, int year, int month);
+        + " where p.customerId=:customerId and p.createdYear in (:years) and p.createdMonth in (:months)"
+        + " group by p.createdYear, p.createdMonth"
+        + " order by p.createdYear, p.createdMonth asc")
+    List<PointsProjection> findPointsForCustomerByYearAndMonth(Long customerId, List<Integer> years, List<Integer> months);
 
     @Query("select sum(p.points) from Points p where p.customerId=:customerId")
     Long findTotalPointsForCustomerId(Long customerId);

@@ -20,11 +20,11 @@ public interface PointsController {
 
     @GetMapping(POINTS_GET_URL)
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get points from last three months")
+    @Operation(summary = "Get points from last three months and total customer points")
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "Customer points per month",
+            description = "Customer points per month and total",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = PointsResponse.class))),
         @ApiResponse(

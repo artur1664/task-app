@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.task.apietrucha.DbTestBase;
 import com.task.apietrucha.factory.PurchaseTestDataFactory;
+import com.task.apietrucha.shared.DateTimeUtils;
 import com.task.apietrucha.transaction.domain.adapter.PointsService;
 import com.task.apietrucha.transaction.domain.adapter.PurchaseService;
 import com.task.apietrucha.transaction.domain.entity.Points;
@@ -21,6 +22,9 @@ class PurchaseServiceImplIT extends DbTestBase {
 
     @MockBean
     private PointsService pointsService;
+
+    @MockBean
+    private DateTimeUtils dateTimeUtils;
 
     @BeforeEach
     void setUp() {

@@ -6,16 +6,16 @@
 1. clone project from: https://github.com/artur1664/task-app.git
 2. go to directory with pom file
 3. execute: mvn clean install OR mvn clean install -DskipTests
-4. start jar from target folder with command: java -jar app-1.0.jar
+4. start jar from target folder with command: java -jar taskapp.jar
 if you want to start application with random test data add profile test-data to java command:
-java -jar -Dspring.profiles.active=test-data app-1.0.jar 
+java -jar -Dspring.profiles.active=test-data taskapp.jar 
 
 ## Start application with docker compose
 1. clone project from: https://github.com/artur1664/task-app.git
 2. go to project directory with docker-compose.yml file
-3. execute: docker-compose up -d new container with name task-app should be running
+3. execute: docker-compose up -d -> new container with name task-app should be running (docker ps to check running containers)
 
-## Rest api overview:
+## Rest api overview (documentation):
 Once application is started on local computer go to: http://localhost:8080/swagger-ui/index.html
 
 ## H2 database

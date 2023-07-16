@@ -11,7 +11,7 @@ public record PointsResponse(Long total, List<PointsPerMonth> pointsPerMonth) {
     public static PointsResponse from(List<PointsProjection> pointsProjection, Long total) {
         return PointsResponse.builder()
             .total(total)
-            .pointsPerMonth(pointsProjection.stream().map(PointsPerMonth::from).toList())
+            .pointsPerMonth(PointsPerMonth.from(pointsProjection))
             .build();
     }
 }

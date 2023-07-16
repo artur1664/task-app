@@ -6,6 +6,7 @@ import com.task.apietrucha.transaction.domain.projections.PointsProjection;
 import com.task.apietrucha.transaction.domain.rest.PointsResponse;
 import com.task.apietrucha.transaction.infrastructure.PointsRepository;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,12 +47,34 @@ class PointsServiceImpl implements PointsService {
         int actualYear = dateTimeUtils.getActualYearNumber();
         int actualMonth = dateTimeUtils.getActualMonthNumber();
         int minusMonths = 3;
-        List<PointsProjection> pointsProjection = pointsRepository
-            .findPointsFromLastThreeMonthsForCustomerId(customerId, actualYear, actualMonth - minusMonths);
+        int actualMonthMinusMonths = actualMonth - minusMonths;
+        List<Integer> years = new ArrayList<>();
+        List<Integer> months = new ArrayList<>();
+        if (actualMonthMinusMonths >= 0) {
+            //this year only
+            years.add(actualYear);
+            getMonthsNumbers(actualMonth, actualMonthMinusMonths, months);
+        } else {
+            //data from previous year needed
+            years.add(actualYear);
+            years.add(actualYear - 1);
+            int maxMonthNumber = 12;
+            //get months numbers from previous year
+            getMonthsNumbers(maxMonthNumber, maxMonthNumber + actualMonthMinusMonths, months);
+            //get months numbers from this year
+            getMonthsNumbers(actualMonth, 0, months);
+        }
+        List<PointsProjection> pointsProjection = pointsRepository.findPointsForCustomerByYearAndMonth(customerId, years, months);
         Long totalCustomerPoints = pointsRepository.findTotalPointsForCustomerId(customerId);
         PointsResponse response = PointsResponse.from(pointsProjection, totalCustomerPoints);
         log.info("Returning customer points from last 3 months. {}", response);
         return response;
+    }
+
+    private void getMonthsNumbers(int loopStartValue, int condition, List<Integer> months) {
+        for (int i = loopStartValue; i > condition; i--) {
+            months.add(i);
+        }
     }
 
     @Override

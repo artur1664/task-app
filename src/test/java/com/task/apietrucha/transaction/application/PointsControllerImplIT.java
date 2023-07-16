@@ -33,14 +33,14 @@ class PointsControllerImplIT extends ApplicationTestBase {
             .andExpect(jsonPath("$.total", is(expectedTotalCount)))
             .andExpect(jsonPath("$.pointsPerMonth", hasSize(expectedPerMonthResultsCount)))
             //and expect 3 points from month 6
-            .andExpect(jsonPath("$.pointsPerMonth[0].points", is(3)))
-            .andExpect(jsonPath("$.pointsPerMonth[0].month", is("2023-6")))
+            .andExpect(jsonPath("$.pointsPerMonth[0].points", is(1)))
+            .andExpect(jsonPath("$.pointsPerMonth[0].month", is("2023-4")))
             //and expect 2 points from month 5
             .andExpect(jsonPath("$.pointsPerMonth[1].points", is(2)))
             .andExpect(jsonPath("$.pointsPerMonth[1].month", is("2023-5")))
             //and expect 1 points from month 4
-            .andExpect(jsonPath("$.pointsPerMonth[2].points", is(1)))
-            .andExpect(jsonPath("$.pointsPerMonth[2].month", is("2023-4")));
+            .andExpect(jsonPath("$.pointsPerMonth[2].points", is(3)))
+            .andExpect(jsonPath("$.pointsPerMonth[2].month", is("2023-6")));
     }
 
     @Test

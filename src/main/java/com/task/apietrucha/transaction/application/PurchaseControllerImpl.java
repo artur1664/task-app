@@ -4,6 +4,7 @@ import static com.task.apietrucha.shared.rest.RestConstants.APP_BASE_URL_V1;
 
 import com.task.apietrucha.shared.ErrorResponse;
 import com.task.apietrucha.transaction.application.contract.PurchaseController;
+import com.task.apietrucha.transaction.application.error.PurchaseNotFound;
 import com.task.apietrucha.transaction.domain.adapter.PurchaseService;
 import com.task.apietrucha.transaction.domain.rest.CreatePurchaseRequest;
 import com.task.apietrucha.transaction.domain.rest.CreatePurchaseResponse;

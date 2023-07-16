@@ -1,7 +1,7 @@
 package com.task.apietrucha.transaction.domain;
 
 import com.task.apietrucha.shared.DateTimeUtils;
-import com.task.apietrucha.transaction.application.PurchaseNotFound;
+import com.task.apietrucha.transaction.application.error.PurchaseNotFound;
 import com.task.apietrucha.transaction.domain.adapter.PointsService;
 import com.task.apietrucha.transaction.domain.adapter.PurchaseService;
 import com.task.apietrucha.transaction.domain.entity.Points;

@@ -24,7 +24,7 @@ public interface RewordController {
     @ApiResponses(value = {
         @ApiResponse(
             responseCode = "200",
-            description = "Get reword based on points",
+            description = "Reword information for customer",
             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                 schema = @Schema(implementation = RewordResponse.class))),
         @ApiResponse(

@@ -1,4 +1,4 @@
-package com.task.apietrucha.transaction.application;
+package com.task.apietrucha.transaction.application.error;
 
 public class PurchaseNotFound extends RuntimeException {
 

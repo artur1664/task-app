@@ -1,11 +1,16 @@
 package com.task.apietrucha.transaction.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.task.apietrucha.shared.DateTimeUtils;
 import com.task.apietrucha.transaction.domain.adapter.PointsService;
 import com.task.apietrucha.transaction.infrastructure.PointsRepository;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,5 +60,29 @@ class PointsServiceImplTest {
         Integer result = service.calculate(input);
         //then
         assertEquals(expectedResult, result);
+    }
+
+    private static Stream<Arguments> get_points_test_case() {
+        return Stream.of(
+            Arguments.of(1, 2023, List.of(2023, 2022), List.of(12, 11, 1)),
+            Arguments.of(2, 2023, List.of(2023, 2022), List.of(12, 2, 1)),
+            Arguments.of(3, 2023, List.of(2023), List.of(3, 2, 1)),
+            Arguments.of(4, 2023, List.of(2023), List.of(4, 3, 2))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("get_points_test_case")
+    void get_points_from_last_three_months_should_handle_data_from_previous_year(int actualMonth, int actualYear,
+        List<Integer> years, List<Integer> months) {
+        //given
+        when(dateTimeUtils.getActualMonthNumber()).thenReturn(actualMonth);
+        when(dateTimeUtils.getActualYearNumber()).thenReturn(actualYear);
+        //
+        var customerId = 1L;
+        //when
+        service.getPointsFromLastThreeMonths(customerId);
+        //then
+        verify(pointsRepository, times(1)).findPointsForCustomerByYearAndMonth(eq(customerId), eq(years), eq(months));
     }
 }
